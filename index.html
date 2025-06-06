@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HZ Assistant</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <!-- Add this right after the opening body tag -->
+  <div class="floating-particles">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+  </div>
+
+  <!-- API Key Modal -->
+  <div class="modal-container" id="apiKeyModal">
+    <div class="modal">
+      <div class="modal-content">
+        <!-- Update the modal header for more visual appeal -->
+        <div class="modal-header">
+          <div class="logo-container">
+            <div class="logo">HZ</div>
+            <div class="logo-glow"></div>
+          </div>
+          <h2>Welcome to HZ Assistant</h2>
+          <p>Your AI companion with a beautiful interface</p>
+        </div>
+        <div class="modal-body">
+          <div class="input-group">
+            <input type="password" id="apiKeyInput" placeholder="Enter your API key">
+            <button id="saveApiKey" class="primary-button">Continue</button>
+          </div>
+          <div class="api-info">
+            <p>Your API key is stored locally on your device and never sent to our servers.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main App Container -->
+  <div class="app-container" id="appContainer">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo-small">HZ</div>
+      </div>
+      <div class="sidebar-menu">
+        <div class="sidebar-item active" data-tool="chat">
+          <i class="fas fa-comment-alt"></i>
+          <span>Chat</span>
+        </div>
+        <div class="sidebar-item" data-tool="notes">
+          <i class="fas fa-sticky-note"></i>
+          <span>Notes</span>
+        </div>
+        <div class="sidebar-item" data-tool="reminders">
+          <i class="fas fa-bell"></i>
+          <span>Reminders</span>
+        </div>
+        <div class="sidebar-item" data-tool="code">
+          <i class="fas fa-code"></i>
+          <span>Code Help</span>
+        </div>
+      </div>
+      <div class="sidebar-footer">
+        <div class="sidebar-item" id="settingsButton">
+          <i class="fas fa-cog"></i>
+          <span>Settings</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Update the chat header to be more eye-catching -->
+      <div class="chat-header">
+        <div class="chat-header-left">
+          <h2>Chat</h2>
+          <div class="status-indicator">
+            <span class="status-dot"></span>
+            <span class="status-text">Online</span>
+          </div>
+        </div>
+        <div class="header-actions">
+          <button class="icon-button" id="clearChat" title="Clear chat history">
+            <i class="fas fa-trash-alt"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Chat Messages -->
+      <div class="chat-messages" id="chatMessages">
+        <div class="message-group system">
+          <div class="message">
+            <p>Hello! I'm HZ Assistant. How can I help you today?</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chat Input -->
+      <div class="chat-input-container">
+        <div class="chat-input-wrapper">
+          <button class="icon-button" id="voiceInput">
+            <i class="fas fa-microphone"></i>
+          </button>
+          <textarea id="messageInput" placeholder="Message HZ Assistant..." rows="1"></textarea>
+          <button class="icon-button" id="fileUpload">
+            <i class="fas fa-paperclip"></i>
+          </button>
+          <button class="icon-button send-button" id="sendMessage">
+            <i class="fas fa-paper-plane"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Settings Modal -->
+  <div class="modal-container" id="settingsModal">
+    <div class="modal settings-modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Settings</h2>
+          <button class="close-button" id="closeSettings">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="settings-group">
+            <h3>API Configuration</h3>
+            <div class="input-group">
+              <label for="apiKeySettings">OpenRouter API Key</label>
+              <input type="password" id="apiKeySettings" placeholder="••••••••••••••••">
+              <button id="updateApiKey" class="secondary-button">Update</button>
+            </div>
+          </div>
+          <div class="settings-group">
+            <h3>Appearance</h3>
+            <div class="toggle-group">
+              <span>Dark Mode</span>
+              <label class="toggle">
+                <input type="checkbox" id="darkModeToggle">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <input type="file" id="fileInput" style="display: none">
+  <script src="script.js"></script>
+</body>
+</html>
