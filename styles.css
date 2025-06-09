@@ -358,9 +358,9 @@ textarea:focus {
   border-right: 1px solid var(--border-color);
   display: flex;
   flex-direction: column;
-  transition: width var(--transition-speed);
+  transition: width var(--transition-speed), left var(--transition-speed);
   overflow: hidden;
-  z-index: 100;
+  z-index: 600;
 }
 
 .sidebar:hover {
@@ -750,6 +750,7 @@ textarea:focus {
   border: 1px solid var(--border-color);
   transition: all 0.2s;
   min-height: 50px;
+  position: relative;
 }
 
 .dark-mode .chat-input-wrapper {
@@ -771,10 +772,13 @@ textarea:focus {
   font-size: 16px; /* Prevent zoom on iOS */
   line-height: 1.4;
   min-height: 20px;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 .chat-input-wrapper textarea:focus {
   box-shadow: none;
+  outline: none;
 }
 
 .icon-button {
@@ -1140,22 +1144,22 @@ code {
 
   html {
     font-size: 14px;
+    height: 100%;
+    height: -webkit-fill-available;
+  }
+
+  body {
+    height: 100vh;
+    height: -webkit-fill-available;
+  }
+
+  .app-container {
+    height: 100vh;
+    height: -webkit-fill-available;
   }
 
   .sidebar {
-    position: fixed;
-    left: -280px;
-    width: 280px;
-    z-index: 200;
-    transition: left var(--transition-speed);
-  }
-
-  .sidebar.mobile-open {
-    left: 0;
-  }
-
-  .sidebar-item span {
-    opacity: 1;
+    display: none;
   }
 
   .main-content {
@@ -1163,7 +1167,8 @@ code {
   }
 
   .chat-header {
-    padding: 0 15px;
+    padding: 0 15px; /* Add left padding for menu button */
+    position: relative;
   }
 
   .chat-header h2 {
@@ -1176,6 +1181,8 @@ code {
 
   .chat-messages {
     padding: 15px;
+    height: calc(100vh - 56px - 70px); /* Adjust for header and input */
+    height: calc(-webkit-fill-available - 56px - 70px);
   }
 
   .message-group {
@@ -1189,6 +1196,16 @@ code {
 
   .chat-input-container {
     padding: 10px 15px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--card-background);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid var(--border-color);
+    z-index: 50;
+    /* Add safe area for devices with home indicator */
+    padding-bottom: calc(10px + env(safe-area-inset-bottom));
   }
 
   .terminal-code {
@@ -1206,6 +1223,7 @@ code {
   .modal {
     margin: 10px;
     max-height: calc(100vh - 20px);
+    max-height: calc(-webkit-fill-available - 20px);
   }
 
   .modal-header,
@@ -1218,67 +1236,35 @@ code {
     height: 60px;
     font-size: 24px;
   }
-
-  /* Add mobile menu button */
-  .mobile-menu-button {
-    display: block;
-    position: fixed;
-    top: 15px;
-    left: 15px;
-    z-index: 300;
-    width: 44px;
-    height: 44px;
-    background: var(--card-background);
-    backdrop-filter: blur(20px);
-    border: 1px solid var(--border-color);
-    border-radius: 50%;
-    color: var(--text-color);
-    font-size: 18px;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .mobile-menu-button:hover {
-    background: var(--primary-color);
-    color: white;
-  }
-
-  /* Overlay for mobile sidebar */
-  .sidebar-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 150;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s, visibility 0.3s;
-  }
-
-  .sidebar-overlay.active {
-    opacity: 1;
-    visibility: visible;
-  }
 }
 
 /* Medium mobile devices (481px to 768px) */
 @media (min-width: 481px) and (max-width: 768px) {
+  html {
+    height: 100%;
+    height: -webkit-fill-available;
+  }
+
+  body {
+    height: 100vh;
+    height: -webkit-fill-available;
+  }
+
+  .app-container {
+    height: 100vh;
+    height: -webkit-fill-available;
+  }
+
   .sidebar {
-    position: fixed;
-    left: -200px;
-    width: 200px;
-    z-index: 200;
-    transition: left var(--transition-speed);
+    display: none;
   }
 
-  .sidebar.mobile-open {
-    left: 0;
+  .main-content {
+    width: 100%;
   }
 
-  .sidebar-item span {
-    opacity: 1;
+  .chat-header {
+    padding: 0 20px; /* Add left padding for menu button */
   }
 
   .message-group {
@@ -1287,55 +1273,29 @@ code {
 
   .chat-messages {
     padding: 18px;
+    height: calc(100vh - 60px - 80px); /* Adjust for header and input */
+    height: calc(-webkit-fill-available - 60px - 80px);
+  }
+
+  .chat-input-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--card-background);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid var(--border-color);
+    z-index: 50;
+    padding-bottom: calc(10px + env(safe-area-inset-bottom));
   }
 
   .terminal-code {
     font-size: 13px;
   }
-
-  .mobile-menu-button {
-    display: block;
-    position: fixed;
-    top: 15px;
-    left: 15px;
-    z-index: 300;
-    width: 44px;
-    height: 44px;
-    background: var(--card-background);
-    backdrop-filter: blur(20px);
-    border: 1px solid var(--border-color);
-    border-radius: 50%;
-    color: var(--text-color);
-    font-size: 18px;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .sidebar-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 150;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s, visibility 0.3s;
-  }
-
-  .sidebar-overlay.active {
-    opacity: 1;
-    visibility: visible;
-  }
 }
 
 /* Tablets (769px to 1024px) */
 @media (min-width: 769px) and (max-width: 1024px) {
-  .sidebar:hover {
-    width: var(--sidebar-expanded-width);
-  }
-
   .message-group {
     max-width: 85%;
   }
@@ -1343,32 +1303,12 @@ code {
   .terminal-code {
     font-size: 14px;
   }
-
-  .mobile-menu-button {
-    display: none;
-  }
-
-  .sidebar-overlay {
-    display: none;
-  }
 }
 
 /* Desktop (1025px and up) */
 @media (min-width: 1025px) {
-  .sidebar:hover {
-    width: var(--sidebar-expanded-width);
-  }
-
   .message-group {
     max-width: 80%;
-  }
-
-  .mobile-menu-button {
-    display: none;
-  }
-
-  .sidebar-overlay {
-    display: none;
   }
 }
 
@@ -1461,8 +1401,7 @@ code {
 @media print {
   .sidebar,
   .chat-input-container,
-  .floating-particles,
-  .mobile-menu-button {
+  .floating-particles {
     display: none !important;
   }
 
